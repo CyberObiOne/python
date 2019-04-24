@@ -18,11 +18,15 @@ for issue in jira.search_issues('Your JQL here'):
      for component in issue.fields.components:
        existingComponents.append({"name" : component.name})
        #print existingComponents
-
+     existingVersion = []
+     for version in issue.fields.fixVersions:
+       existingVersion.append({"name" : version.name})
+       #print existingVersion
      issue_dict['summary'] = issue.fields.summary
      issue_dict['customfield_10002'] = issue.fields.customfield_10002
      issue_dict['components'] = existingComponents
      issue_dict['priority'] = { 'id': issue.fields.priority.id, 'name': issue.fields.priority.name }
+     issue_dict['fixVersions'] = existingVersion
      
      print issue_dict
      new_issue = jira.create_issue(fields=issue_dict)
