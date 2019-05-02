@@ -5,7 +5,7 @@ import re
 import json
 import bs4
 import mailer
-sys.path.insert(0, '/home/slackbot/')
+sys.path.insert(0, '/your_path_to_.env_file')
 import expiration_date
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
