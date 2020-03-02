@@ -5,7 +5,7 @@ import os
 import db_orphaned_spaces
 from jira import JIRA
 from dotenv import load_dotenv
-project_folder = os.path.expanduser('/home/project_archive')
+project_folder = os.path.expanduser('/home/project_archive') #change as necessary
 load_dotenv(os.path.join(project_folder, '.env'))
 
 orphaned_spaces = db_orphaned_spaces.confluence_spaces() #get json from SQL query
