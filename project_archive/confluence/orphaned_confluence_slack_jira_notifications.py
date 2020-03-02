@@ -27,7 +27,7 @@ if   orphaned_spaces: #json is not empty
                                 search_string = "summary ~\"{}\" and statuscategory!=done ".format(summary)
                                 issues = jira.search_issues(search_string, maxResults=25)
                                 if issues: #if issue already exist on jira server - add a comment instead of creation.
-                                        jira.add_comment(issues[0].key, "Please, provide an update [~{}]".format (HEADERS['assignee']))
+                                        jira.add_comment(issues[0].key, "Please, provide an update [~{}]".format (HEADERS['assignee']['name']))
                                 else:
 
                                         url_spacename = urllib.quote_plus( a['spacename'])
