@@ -4,7 +4,7 @@ import os
 import json
 from dotenv import load_dotenv
 from psycopg2.extras import RealDictCursor
-project_folder = os.path.expanduser('/home/project_archive')
+project_folder = os.path.expanduser('/home/project_archive') #change as necessary
 load_dotenv(os.path.join(project_folder, '.env'))
 def confluence_spaces():
         try:
