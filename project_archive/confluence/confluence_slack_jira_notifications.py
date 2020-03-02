@@ -47,4 +47,4 @@ if   inactive_spaces: #json is not empty
                                                 print (new_issue.key)
         if scope_of_spaces: #if string is not empty - send notification to slack. 
                 payload = {'text': "Confleunce Space(s) without activity for 180 days: \n {} ".format(scope_of_spaces) }
-                r = requests.post("https://hooks.slack.com/services/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", data=json.dumps(payload))
+                r = requests.post("https://hooks.slack.com/services/slack/incoming/webhook", data=json.dumps(payload))
