@@ -5,7 +5,7 @@ import os
 import db_confluence_spaces
 from jira import JIRA
 from dotenv import load_dotenv
-project_folder = os.path.expanduser('/home/project_archive') #change as necessary
+project_folder = os.path.expanduser('/home/project_archive/confluence/') #change as necessary
 load_dotenv(os.path.join(project_folder, '.env'))
 
 inactive_spaces  = db_confluence_spaces.confluence_spaces()
@@ -35,16 +35,16 @@ if   inactive_spaces: #json is not empty
                                         issue_dict['description'] = 'Please, approve space archive' + ' '  + a['spacename'] + ' '  + url
                                         issue_dict['assignee'] = {'name': a['usernames'][0]}
                                         if len(a['usernames']) == 1: #if admins is more than one, add first to assignee, add other to CC
-                                                new_issue = jira.create_issue(fields=issue_dict)
+                                                new_issue = jira.create_issue(fields=issue_dict)  #create Jira ticket 
                                                 scope_of_spaces += a['spacename'] + ' - ' +  'https://jira_url.com/jira/browse/'  + new_issue.key  + '\n'
                                                 print (new_issue.key)
                                         else:
                                                 userlist = ["[~" +  item + "]" + ", " for item in a['usernames']]
                                                 CC = ''.join(userlist)
                                                 issue_dict['description'] = 'Please, approve project archive' + ' '  + a['spacename'] + ' '  + url + '\n' + 'CC:' + CC
-                                                new_issue = jira.create_issue(fields=issue_dict)
-                                                scope_of_spaces += a['spacename'] + ' - ' +  'https://jira_url.com/jira/browse/'  + new_issue.key  + '\n'
+                                                new_issue = jira.create_issue(fields=issue_dict) #create Jira ticket with CC option
+                                                scope_of_spaces += a['spacename'] + ' - ' +  'https://jira_url.com/jira/browse/'  + new_issue.key  + '\n' #create slack payload
                                                 print (new_issue.key)
         if scope_of_spaces: #if string is not empty - send notification to slack. 
                 payload = {'text': "Confleunce Space(s) without activity for 180 days: \n {} ".format(scope_of_spaces) }
-                r = requests.post("https://hooks.slack.com/services/slack/incoming/webhook", data=json.dumps(payload))
+                r = requests.post("https://hooks.slack.com/services/slack/incoming/webhook", data=json.dumps(payload))# send notifications to Slack
